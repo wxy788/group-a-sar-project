@@ -1,0 +1,39 @@
+# ---- 数据（体积大，勿提交原始产品）----
+data/raw/**
+data/processed/**
+
+# ---- Python ----
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+env/
+
+# ---- MATLAB ----
+*.asv
+*.m~
+*.mat
+# 保留必要的脚本，忽略大体积中间产物
+src/imaging/private/
+
+# ---- 模型权重（体积大，按需用 Git LFS 或另行管理）----
+models/*.pt
+models/*.pth
+models/*.ckpt
+
+# ---- 结果与缓存 ----
+results/figures/*
+results/metrics/*
+!results/figures/.gitkeep
+!results/metrics/.gitkeep
+*.log
+
+# ---- 编辑器/系统 ----
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# ---- 环境 ----
+.env

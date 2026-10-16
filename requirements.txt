@@ -1,0 +1,30 @@
+# 哨兵 SAR 图像处理项目 · Python 依赖（基础）
+# 安装建议：在虚拟环境中 `pip install -r requirements.txt`
+# 另需单独安装 MATLAB 与 MATLAB Engine for Python（见 README 环境依赖）
+
+# 核心深度学习
+torch>=2.0
+torchvision>=0.15
+
+# 科学计算与可视化
+numpy>=1.23
+scipy>=1.9
+matplotlib>=3.6
+pandas>=1.5
+Pillow>=9.0
+tqdm>=4.64
+pyyaml>=6.0
+
+# 界面
+streamlit>=1.25
+
+# ---- 可选 / 模块专属（按需取消注释）----
+# 自聚焦 PAFnet 官方依赖（github.com/aisari/AutofocusSAR）
+# torchbox
+# torchsar
+
+# 旁瓣抑制 SVNN 官方依赖（github.com/suoyuxi/SVNN）
+# 以官方仓库 requirements 为准
+
+# MATLAB Engine for Python（由 MATLAB 安装目录自带，非 pip 安装）
+# 路径示例：<MATLAB>/extern/engines/python 下 `python setup.py install`
