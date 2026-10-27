@@ -18,6 +18,9 @@ pyyaml>=6.0
 # 界面
 streamlit>=1.25
 
+# SLC 读取器（src/imaging/read_slc.py）：分块读取测量 TIFF，免整景载入
+tifffile>=2023.0
+
 # ---- 可选 / 模块专属（按需取消注释）----
 # 自聚焦 PAFnet 官方依赖（github.com/aisari/AutofocusSAR）
 # torchbox

@@ -1,0 +1,32 @@
+SARPara.C % 光速(m/s)
+SARPara.Fc % 雷达中心频率(Hz)
+SARPara.Lambda % 雷达波长(m)
+SARPara.Va % 等效雷达速度Vr(m/s)
+SARPara.Kr % 距离向线性调频率(Hz/s)
+SARPara.Tp % 脉冲持续时间(s)
+SARPara.Fr % 距离向采样频率(Hz)
+SARPara.Ts % 距离向时域采样间隔(s)
+SARPara.dR % 距离向采样间隔(m)
+SARPara.Bw % 距离向信号带宽(Hz)
+SARPara.Np % 距离向脉冲采样点数
+SARPara.T0 % 原数据开始采样时间(s)
+SARPara.R0 % 原数据第一个采样斜距(m)
+SARPara.Tnrn % 距离向时间采样点
+SARPara.Fnrn % 距离向频率采样点
+SARPara.Ka % 方位向线性调频率(Hz/s)
+SARPara.Fdc % 方位向多普勒中心频率(Hz)
+SARPara.PRF % 脉冲重复频率(Hz)
+SARPara.PRI % 脉冲重复间隔(s)
+SARPara.Tnan % 方位向时间采样点
+SARPara.Fnan % 方位向频率采样点
+SARPara.SquintAngle % 波束斜视角
+SARPara.AzimuthBw % asind(SARPara.PRF * SARPara.Lambda / 2 / SARPara.Va * cosd(SARPara.SquintAngle)) * 0.886 方位波束宽度
+SARPara.Rs % 参考斜距
+SARPara.deltaR % 距离向分辨率
+SARPara.deltaA % 方位向分辨率
+SARPara.xCenter % SARPara.Rs * SARPara.Fdc * SARPara.Lambda / 2 / SARPara.Va 成像场景中心x(方位)坐标
+SARPara.yCenter % sqrt(SARPara.Rs^2 - SARPara.xCenter^2) 成像场景中心y(距离)坐标
+SARPara.La % SARPara.Rs * deg2rad(SARPara.AzimuthBw) / cosd(SARPara.SquintAngle) 条带式合成孔径长度(m)
+SARPara.TLa % 合成孔径时间
+SARPara.DopplerBw % abs(SARPara.TLa * SARPara.Ka) 多普勒带宽(Hz)
+SARPara.NLa % floor(SARPara.La /  SARPara.deltaA) 条带式合成孔径点数

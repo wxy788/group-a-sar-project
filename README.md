@@ -33,7 +33,9 @@ SAR-Project/
 │   ├── raw/                  # SM SLC 原始产品（体积大，勿提交）
 │   └── processed/            # 裁块、退化样本、参数 json
 ├── src/
-│   ├── imaging/              # MATLAB: RD 成像、PGA、SVA
+│   ├── imaging/              # MATLAB: RD 成像、PGA、SVA、Level-0 解码
+│   │   ├── read_level0.m     #   【本项目封装】Level-0 RAW 解码+复数读取+参数/ROI 导出
+│   │   └── sentinel_l0_toolkit/  # 助教提供的解码/成像工具包（.venv 仍在 data/raw/Sentinel-L0条带）
 │   ├── autofocus/            # Python/PyTorch: 自聚焦网络
 │   ├── sidelobe/             # Python/PyTorch: 旁瓣抑制网络
 │   └── gui/                  # Streamlit 界面 + MATLAB Engine 调用
@@ -64,6 +66,7 @@ SAR-Project/
 |---|---|---|
 | 自聚焦 | PAFnet（RAFnet 备选） | docs/references 中任务二笔记 |
 | 旁瓣抑制 | SVNN（CNN+RSVA 备选） | docs/references 中任务三笔记 |
+| 成像与数据 | sentinel_l0_toolkit（助教）+ read_level0.m（本项目封装） | src/imaging/README.md |
 
 ## 7. 验收要点
 

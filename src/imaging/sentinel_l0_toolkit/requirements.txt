@@ -1,0 +1,4 @@
+sentinel1decoder==2.1.0
+scipy==1.18.1
+h5py==3.16.0
+hdf5storage==0.2.2

@@ -2,6 +2,9 @@
 data/raw/**
 data/processed/**
 
+# ---- Level-0 工具包自身可能生成的输出（我们用 data/processed 代替）----
+src/imaging/sentinel_l0_toolkit/outputs/
+
 # ---- Python ----
 __pycache__/
 *.py[cod]
@@ -37,3 +40,6 @@ Thumbs.db
 
 # ---- 环境 ----
 .env
+
+# ---- 本地智能体工作态（非项目交付物，含私人记忆/自动化）----
+.workbuddy/
