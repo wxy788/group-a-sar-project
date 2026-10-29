@@ -13,10 +13,13 @@
 
 ## 2. 环境依赖
 
-- MATLAB（含 **MATLAB Engine for Python**）
-- Python 3.x + PyTorch
-- 界面：Streamlit（经 MATLAB Engine 调用传统函数）
-- 详见 `requirements.txt`；自聚焦/旁瓣抑制各自的官方仓库依赖见各模块 README。
+- MATLAB（含 **MATLAB Engine for Python**，本项目当前未装）
+- Python 双 venv（均 uv 管理、CPU 版 torch，路径已被 .gitignore 排除）：
+  - **`.venv`（Python 3.12）** → SVNN 旁瓣抑制 + 通用脚本（`read_slc.py` 等）
+  - **`envs/pafnet`（Python 3.11）** → PAFnet 自聚焦（`torchbox 1.1.27` + `torchsar 1.1.4` 手动装）
+- 界面：Streamlit（第8周，经 MATLAB Engine 调用传统函数）
+- 详见 `requirements.txt`（含两条线一键复现命令、torchsar 手动安装说明）；
+  自聚焦/旁瓣抑制各自的官方仓库已克隆到 `third_party/`。
 
 ## 3. 目录结构
 
@@ -35,10 +38,14 @@ SAR-Project/
 ├── src/
 │   ├── imaging/              # MATLAB: RD 成像、PGA、SVA、Level-0 解码
 │   │   ├── read_level0.m     #   【本项目封装】Level-0 RAW 解码+复数读取+参数/ROI 导出
+│   │   ├── read_slc.py       #   【本项目封装】Level-1 SLC 复数分块读取+定标+ROI
 │   │   └── sentinel_l0_toolkit/  # 助教提供的解码/成像工具包（.venv 仍在 data/raw/Sentinel-L0条带）
 │   ├── autofocus/            # Python/PyTorch: 自聚焦网络
 │   ├── sidelobe/             # Python/PyTorch: 旁瓣抑制网络
 │   └── gui/                  # Streamlit 界面 + MATLAB Engine 调用
+├── envs/                     # Python 虚拟环境（.venv 已忽略；此目录见 .gitignore）
+│   └── pafnet/               #   PAFnet 自聚焦环境（Python 3.11）
+├── third_party/             # 官方仓库克隆（已忽略）：AutofocusSAR(PAFnet)、SVNN
 ├── models/                   # 训练好的权重与配置
 ├── results/
 │   ├── figures/              # PNG 预览
@@ -62,11 +69,17 @@ SAR-Project/
 
 ## 6. 子模块说明
 
-| 模块 | 选型（初稿，待定稿） | 参考 |
+| 模块 | 选型（已定稿） | 参考 |
 |---|---|---|
 | 自聚焦 | PAFnet（RAFnet 备选） | docs/references 中任务二笔记 |
 | 旁瓣抑制 | SVNN（CNN+RSVA 备选） | docs/references 中任务三笔记 |
 | 成像与数据 | sentinel_l0_toolkit（助教）+ read_level0.m（本项目封装） | src/imaging/README.md |
+
+> **第 2 周数据线已完成**：环境部署（`requirements.txt`）、读取代码、以及
+> 「按场景固定训练/验证/测试划分 + 标签与网络输入核对」详见
+> [docs/data-pipeline.md](docs/data-pipeline.md)。
+> 划分清单：`data/splits/scene_inventory.csv` → `data/splits/scene_split.json`；
+> 核对脚本：`scripts/make_scene_split.py`、`scripts/verify_io_and_split.py`。
 
 ## 7. 验收要点
 

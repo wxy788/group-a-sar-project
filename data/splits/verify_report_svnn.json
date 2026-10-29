@@ -1,0 +1,37 @@
+{
+  "mode": "svnn",
+  "passed": true,
+  "io_contract": {
+    "input": "sample: 带旁瓣的 1D 幅度剖面 / 复数 SLC（实虚分别过网）",
+    "label": "gt: 同长度纯净幅度剖面（监督标签）",
+    "sequence_length": 512,
+    "tensor_shape": "(B,1,L)"
+  },
+  "checks": [
+    {
+      "name": "标签语义：sample 旁瓣能量 > gt 旁瓣能量",
+      "passed": true,
+      "detail": "sample_side=0.7254, gt_side=0.0163"
+    },
+    {
+      "name": "sample 与 gt 形状一致（同长度 1D）",
+      "passed": true,
+      "detail": "sample(1, 512) gt(1, 512)"
+    },
+    {
+      "name": "数据类型为 float（幅度）",
+      "passed": true,
+      "detail": "sample float32, gt float32"
+    },
+    {
+      "name": "SVNN 前向：输出长度=输入长度（1D 保长）",
+      "passed": true,
+      "detail": "inputtorch.Size([1, 1, 512]) -> output(1, 1, 512)"
+    },
+    {
+      "name": "复数推理：实/虚部分别过网后合成，长度守恒（复数 I/O）",
+      "passed": true,
+      "detail": "input(Lc=512) complex 1D -> output(512,) complex 1D"
+    }
+  ]
+}

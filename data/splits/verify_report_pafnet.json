@@ -1,0 +1,37 @@
+{
+  "mode": "pafnet",
+  "passed": true,
+  "io_contract": {
+    "input": "散焦复数块 (Na,Nr,2) 实部/虚部双通道，块尺寸 256x256",
+    "train_supervision": "无（最小图像熵损失 Entropy）",
+    "eval_label": "ca：真实方位相位误差多项式系数（仅供评估/可视化，不参与训练损失）",
+    "patch_size": "256x256"
+  },
+  "checks": [
+    {
+      "name": "PAFnet 输入形状 = (1,256,256,2) 复数双通道",
+      "passed": true,
+      "detail": "X(1, 256, 256, 2)"
+    },
+    {
+      "name": "PAFnet 输出形状守恒（聚焦后仍 256x256 复数）",
+      "passed": true,
+      "detail": "Y(1, 256, 256, 2)"
+    },
+    {
+      "name": "评估标签 ca 形状正确（N, Ma=2）",
+      "passed": true,
+      "detail": "ca(1, 2) (Ma=2 对应 Mas=[[2,3]])"
+    },
+    {
+      "name": "无监督熵损失：散焦输入熵为有限标量（训练信号存在）",
+      "passed": true,
+      "detail": "entropy(defocused)=15.7984"
+    },
+    {
+      "name": "聚焦后熵 <= 散焦熵（自聚焦方向正确）",
+      "passed": true,
+      "detail": "in=15.7984 -> out=15.7983"
+    }
+  ]
+}

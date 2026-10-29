@@ -1,0 +1,25 @@
+{
+  "mode": "split",
+  "passed": true,
+  "splits": {
+    "train": [],
+    "val": [],
+    "test": [
+      "S1A_20250303T140022_072E7E"
+    ]
+  },
+  "checks": [
+    {
+      "name": "每景唯一分配 / 无跨集泄漏",
+      "severity": "error",
+      "passed": true,
+      "detail": "无泄漏"
+    },
+    {
+      "name": "train/val/test 均非空（数据可用性）",
+      "severity": "warn",
+      "passed": false,
+      "detail": "当前划分={'train': 0, 'val': 0, 'test': 1}；待补充场景：train,val（保留真实景为 test，训练/验证景后续下载/合成）"
+    }
+  ]
+}

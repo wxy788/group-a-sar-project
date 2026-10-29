@@ -1,0 +1,25 @@
+﻿# 场景登记表（Scene Inventory）—— 按场景固定划分的唯一数据源
+#
+# 说明：
+#   1. 每一“行”= 一次独立采集（acquisition）。同一采集的 RAW(L0) 与 SLC(L1)
+#      视为同一个 scene（用同一 scene_id），绝不能把同一景拆到不同集合。
+#   2. assigned_split 列是划分的“真值来源”：
+#      - 已显式填写（train/val/test）的，生成器原样采用；
+#      - 留空（,）的，由 make_scene_split.py 用确定性哈希补全（可追加、不改动已有分配）。
+#   3. 本文件应提交到 Git（data/splits/ 不在 .gitignore 内）。
+#   4. 后续新增场景：用 scripts/download_s1_data.py 下载后，在此表追加一行即可，
+#      生成器会保持已有 scene 的分配不变（append-only，杜绝数据泄漏）。
+#
+# 列定义：
+#   scene_id        场景唯一 ID（建议：平台_传感起始时刻_唯一尾号）
+#   platform        卫星平台
+#   sensor_mode     成像模式（本项目固定 SM=Stripmap）
+#   acquisition_date 采集日期 YYYY-MM-DD
+#   products        已有产品（RAW=Level-0, SLC=Level-1）
+#   polarization    极化方式
+#   source          来源（ASF / 仿真 / 助教）
+#   status          available（本地已有）/ pending（待下载）/ simulated（合成）
+#   assigned_split  固定划分：train / val / test（留空则哈希补全）
+#   note            备注
+scene_id,platform,sensor_mode,acquisition_date,products,polarization,source,status,assigned_split,note
+S1A_20250303T140022_072E7E,Sentinel-1A,SM,2025-03-03,RAW;SLC,VV;VH,ASF,available,test,唯一真实场景；保留作两网络的真实泛化/定性评估集（不参与合成训练，避免泄漏）

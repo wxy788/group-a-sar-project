@@ -1,0 +1,31 @@
+{
+  "generated_at": "2026-10-29T10:05:26.255002+00:00",
+  "strategy": "scene-level fixed split; append-only; deterministic hash fallback",
+  "ratio": {
+    "train": 70,
+    "val": 15,
+    "test": 15
+  },
+  "seed": 2020,
+  "source_inventory": "data\\splits\\scene_inventory.csv",
+  "splits": {
+    "train": [],
+    "val": [],
+    "test": [
+      "S1A_20250303T140022_072E7E"
+    ]
+  },
+  "scene_meta": {
+    "S1A_20250303T140022_072E7E": {
+      "platform": "Sentinel-1A",
+      "sensor_mode": "SM",
+      "acquisition_date": "2025-03-03",
+      "products": "RAW;SLC",
+      "polarization": "VV;VH",
+      "source": "ASF",
+      "status": "available",
+      "split": "test",
+      "note": "唯一真实场景；保留作两网络的真实泛化/定性评估集（不参与合成训练，避免泄漏）"
+    }
+  }
+}
