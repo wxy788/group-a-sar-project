@@ -40,7 +40,9 @@ SAR-Project/
 │   │   ├── read_level0.m     #   【本项目封装】Level-0 RAW 解码+复数读取+参数/ROI 导出
 │   │   ├── read_slc.py       #   【本项目封装】Level-1 SLC 复数分块读取+定标+ROI
 │   │   └── sentinel_l0_toolkit/  # 助教提供的解码/成像工具包（.venv 仍在 data/raw/Sentinel-L0条带）
-│   ├── autofocus/            # Python/PyTorch: 自聚焦网络
+│   ├── autofocus/            # MATLAB 传统基线（散焦注入/最小熵/PGA）+ 后续 Python 自聚焦网络
+│   │   ├── week3_autofocus.m #   【第3周交付】散焦注入+MEAF+PGA+指标+网络训练样本生成
+│   │   └── run_autofocus_engine.py  # 连共享 GUI MATLAB 会话运行（绕过 License -5201）
 │   ├── sidelobe/             # Python/PyTorch: 旁瓣抑制网络
 │   └── gui/                  # Streamlit 界面 + MATLAB Engine 调用
 ├── envs/                     # Python 虚拟环境（.venv 已忽略；此目录见 .gitignore）
@@ -80,6 +82,12 @@ SAR-Project/
 > [docs/data-pipeline.md](docs/data-pipeline.md)。
 > 划分清单：`data/splits/scene_inventory.csv` → `data/splits/scene_split.json`；
 > 核对脚本：`scripts/make_scene_split.py`、`scripts/verify_io_and_split.py`。
+
+> **第 3 周（算法 V0.1）已完成**：
+> - 成像与数据 → `src/imaging/week3_imaging.m`（RD 成像 + 点目标 PSF 基线），
+>   说明见 [src/imaging/README.md](src/imaging/README.md)
+> - 自聚焦 → `src/autofocus/week3_autofocus.m`（散焦注入 + 最小熵 + PGA + 指标 + 训练样本），
+>   任务与验收记录见 [docs/plan-autofocus-20261107.md](docs/plan-autofocus-20261107.md)
 
 ## 7. 验收要点
 

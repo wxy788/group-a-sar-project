@@ -125,3 +125,54 @@ slc, params = read_slc(SAFE, 'VV', row0=6000, row1=8048, col0=6000, col1=8048)  
 - **参数 JSON**：fc/λ/PRF/像素间距/采样率/入射角/平台航向/UTC 时间 + **annotation 内 17 个轨道状态向量**。
 - 已实测：2048×2048 VV 块（6000:8048），幅度均值 ≈ 40.4，预览为清晰地形 SAR 图像；定标路径已验证。
 - 依赖：numpy（必需）；tifffile、scipy、Pillow（已在解码 venv 中，见根 `requirements.txt`）。
+
+## 第三周：RD 成像（week3_imaging.m · 第3周交付，MATLAB）
+
+> **模块归属**：成像与数据模块按规划方案本就是 **MATLAB**（`read_level0.m` 解码 + 本脚本成像）。
+> 本脚本是第三周「成像与数据」的可运行 MATLAB 交付，**直接消费第2周已解码的 `corrected.mat`**，
+> 不再重新解码、也不再调用工具包的 `Read_Data_RD.m`。
+
+### 运行
+
+在 **MATLAB** 中将当前目录切到 `src/imaging`，执行：
+
+```matlab
+week3_imaging   % 一键完成 T1~T4，命令行打印验收结论，并写出表格/图像/指标
+```
+
+仅依赖 MATLAB 内置函数（fft2/ifft2/imagesc/jsondecode…），**无工具箱依赖**。
+
+### 两个对数据实测后修正的关键点（与工具包 `Read_Data_RD.m` 的区别）
+
+1. **`corrected.mat` 的 echo 已是「距离向压缩后的复数回波」**（已实测：距离谱相位为线性、
+   二次调频率 Kr≈0；匹配滤波不提升锐度）。因此本脚本**不做距离压缩**，只做方位聚焦 +
+   距离徙动校正(RCMC) + 二次距离压缩(SRC)。
+   → 工具包 `Read_Data_RD.m` 假设「原始线性调频回波」并先做一次距离压缩，直接用于本数据会
+   **二次压缩导致错误**；本脚本改用 2D 频率参考函数逐距离线完成 RCMC+SRC，无需额外徙动插值。
+2. **平台速度 V 必须用轨道脉冲速度模 `sqrt(sum v²)` 的中位数（真实 ≈ 7594 m/s）**，不能用 `mean(v²)`
+   （会得到 ≈4385 m/s，使方位调频率 Ka 偏小约 3× → 方位失焦）。多普勒中心 Fdc 由数据功率加权
+   方位谱质心估计（本景 ≈ 17 Hz）。
+
+### 算法
+
+对（距离已压缩）复数回波用精确 2D 频率参考函数聚焦：
+
+```
+H_ref(ft, fe; R) = exp( +j·(4π/c)·R·sqrt((f0+ft)² − (c·fe/(2V))²) ) · exp(−j·2π·fdc·fe)
+```
+
+逐距离线用各自斜距 R 构造参考 → 天然完成 RCMC 与 SRC；频率网格采用与 `numpy.fft.fftfreq`
+完全一致的原始排序，故 MATLAB 的 `fft2/ifft2` 可直接相乘，无需 `fftshift`。
+
+### 交付物（运行后生成）
+
+- **T1 数据说明表**：`data/processed/data_description_table.md` / `.csv`
+- **T2 真实 SM Level-0 聚焦**：`data/processed/real_focused.mat`（复数图）
+  + `results/figures/real_focused_amplitude.png` + `real_focused_report.json`
+- **T3 仿真点目标 PSF 基线**：`data/processed/simulation/sim_single.mat`、`sim_multi.mat`
+  + `results/figures/sim_*_overview.png` / `sim_*_profile.png`
+- **T4 指标函数验证（验收）**：`results/figures/metrics_validation.csv` + 命令行验收结论
+
+指标口径（PSLR / ISLR / −3dB 主瓣宽度 / 峰值位置误差）见 `week3_imaging.m` 内 `analyze_1d`/`analyze_2d`，
+与规划方案 七.2 一致；单点/多点定位误差 ≤ 1 px、主瓣宽度偏差 ≤ 10% 即达标。
+该逻辑可作为对话 B（自聚焦）/ C（旁瓣抑制）复用的参考实现（B/C 网络侧为 Python/PyTorch）。

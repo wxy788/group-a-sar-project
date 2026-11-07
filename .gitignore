@@ -19,6 +19,11 @@ env/
 *.mat
 # 保留必要的脚本，忽略大体积中间产物
 src/imaging/private/
+# 运行日记含本机绝对路径/耗时，仅本地留存作实跑凭证
+*_run_diary.txt
+
+# ---- 第三方克隆（自带 .git，勿纳入本仓库）----
+third_party/
 
 # ---- 模型权重（体积大，按需用 Git LFS 或另行管理）----
 models/*.pt
