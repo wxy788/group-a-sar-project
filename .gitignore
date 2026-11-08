@@ -47,4 +47,7 @@ Thumbs.db
 .env
 
 # ---- 本地智能体工作态（非项目交付物，含私人记忆/自动化）----
+# 注意：早期 init 提交曾误跟踪 .workbuddy/memory/*.md，已用 git rm --cached 取消跟踪；
+#       磁盘文件保留不动，仅不纳入版本控制、不上传。请勿再用 -f 强行 add。
 .workbuddy/
+**/.workbuddy/
